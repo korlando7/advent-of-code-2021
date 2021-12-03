@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { parseIntRows } = require('../utils/parser');
 
-const measurements = parseIntRows(fs.readFileSync('./input.txt', 'utf-8'));
+const measurements = parseIntRows('./input.txt');
 
 const day1Pt1 = () => { 
   let prev = Infinity;
