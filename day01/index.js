@@ -1,39 +1,41 @@
-const fs = require('fs');
 const { parseIntRows } = require('../utils/parser');
 
 const measurements = parseIntRows('./input.txt');
 
-const day1Pt1 = () => { 
-  let prev = Infinity;
-  let total = 0
 
-  measurements.forEach(measurement => {
-    if (measurement > prev) {
-      total++;
-    }
-
-    prev = measurement;
-  })
-
-  return total;
-}
-
-const day1Pt2 = () => {
+const getIncMeasurementCount = (measurements, groupByN = 0) => {
   let prev = Infinity;
   let total = 0;
-  const len = measurements.length - measurements.length % 3;
+
+  let len = measurements.length;
+
+  if (groupByN) {
+    len -= len % groupByN;
+  }
+
   for (let i = 0; i < len; i++) {
-    const curr = measurements[i] + measurements[i + 1] + measurements[i + 2];
+    let curr = measurements[i];
+    for (let j = 1; j < groupByN; j++) {
+      curr += measurements[i + j];
+    }
+
     if (curr > prev) {
       total++;
     }
 
     prev = curr;
   }
-
   return total;
 }
 
+const day1Pt1 = () => { 
+  return getIncMeasurementCount(measurements);
+}
 
-console.log(day1Pt1());
-console.log(day1Pt2());
+const day1Pt2 = () => {
+  return getIncMeasurementCount(measurements, 3);
+}
+
+
+console.log(day1Pt1()); // 1477
+console.log(day1Pt2()); // 1523
