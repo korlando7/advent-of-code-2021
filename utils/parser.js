@@ -10,7 +10,13 @@ const parseIntRows = (file) => {
   return contents.split('\n').map(n => parseInt(n))
 }
 
+const parseCsvInts = (file) => {
+  const contents = fs.readFileSync(file, 'utf-8');
+  return contents.trim().split(',').map(n => parseInt(n, 10));
+}
+
 module.exports = {
   parseRows,
   parseIntRows,
+  parseCsvInts,
 }
